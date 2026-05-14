@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.1] - 2026-05-14
+## [1.0.2] - 2026-05-14
+
+### Added
+- `automattic/jetpack-autoloader` `^5.0` as a Composer dependency.  
+  Consumers must load `vendor/autoload_packages.php` (not `vendor/autoload.php`) to benefit from conflict-free class loading when multiple plugins share this package.
+
+---
+
+
 
 ### Changed
 - REST endpoint permission is now evaluated via the `wpb_mcp_servers_list_rest_capability` filter on every request, allowing consuming plugins to change the required capability without re-registering the endpoint.

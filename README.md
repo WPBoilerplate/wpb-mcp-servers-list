@@ -12,6 +12,7 @@
 |---|---|
 | PHP | >= 7.4 |
 | WordPress | >= 6.8 |
+| [Jetpack Autoloader](https://github.com/Automattic/jetpack-autoloader) | ^5.0 (Composer dependency) |
 | [MCP Adapter plugin](https://github.com/WordPress/mcp-adapter) | >= 0.5.0 (soft dependency) |
 
 The package works gracefully when MCP Adapter is not active — `get_servers()` simply returns an empty array and `is_adapter_available()` returns `false`.
@@ -24,11 +25,13 @@ The package works gracefully when MCP Adapter is not active — `get_servers()` 
 composer require wpboilerplate/wpb-mcp-servers-list
 ```
 
-Make sure your plugin loads Composer's autoloader:
+Make sure your plugin loads the **Jetpack Autoloader** (installed alongside this package):
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload_packages.php';
 ```
+
+> This package uses [Jetpack Autoloader](https://github.com/Automattic/jetpack-autoloader) instead of the standard Composer autoloader to prevent class-version conflicts when multiple plugins require the same package. Always load `vendor/autoload_packages.php`, **not** `vendor/autoload.php`.
 
 ---
 
