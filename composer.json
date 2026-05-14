@@ -1,0 +1,45 @@
+{
+    "name": "wpboilerplate/wpb-mcp-servers-list",
+    "description": "Composer library to retrieve all MCP servers registered in WordPress via the MCP Adapter plugin. Provides typed data objects and an optional REST endpoint. Styling and display are intentionally left to the consuming plugin.",
+    "type": "library",
+    "license": "GPL-2.0-or-later",
+    "keywords": [
+        "wordpress",
+        "mcp",
+        "model-context-protocol",
+        "mcp-adapter",
+        "mcp-servers"
+    ],
+    "homepage": "https://github.com/WPBoilerplate/wpb-mcp-servers-list",
+    "support": {
+        "issues": "https://github.com/WPBoilerplate/wpb-mcp-servers-list/issues",
+        "source": "https://github.com/WPBoilerplate/wpb-mcp-servers-list"
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0 || ^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPBoilerplate\\McpServersList\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WPBoilerplate\\McpServersList\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "wpb-mcp-servers-list": {
+            "version": "1.0.0"
+        }
+    }
+}
