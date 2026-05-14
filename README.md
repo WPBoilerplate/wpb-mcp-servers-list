@@ -93,10 +93,26 @@ add_action( 'rest_api_init', function () {
     // Default: GET /wp-json/wpb-mcp-servers-list/v1/servers  (requires manage_options)
     RestEndpoint::register();
 
-    // Custom namespace / capability:
+    // Custom namespace / capability at registration time:
     // RestEndpoint::register( 'read', 'my-plugin/v1', '/mcp-servers' );
 }, 20 );
 ```
+
+The endpoint is **admin-only by default** (`manage_options`). Use the `wpb_mcp_servers_list_rest_capability` filter to change the required capability at runtime:
+
+```php
+// Allow editors to access the endpoint:
+add_filter( 'wpb_mcp_servers_list_rest_capability', function ( string $cap ): string {
+    return 'edit_posts';
+} );
+
+// Allow any logged-in user:
+add_filter( 'wpb_mcp_servers_list_rest_capability', function ( string $cap ): string {
+    return 'read';
+} );
+```
+
+> **Note:** The filter takes precedence over the `$capability` argument passed to `RestEndpoint::register()`. Non-admin users always receive a `401 Unauthorized` response if neither the argument nor the filter grants them access.
 
 Response shape:
 
@@ -151,10 +167,17 @@ if ( McpServersList::is_adapter_available() ) {
 
 | Method | Description |
 |---|---|
-| `::register( $capability, $namespace, $route )` | Register the REST endpoint |
+| `::register( $capability, $namespace, $route )` | Register the REST endpoint (admin-only by default) |
 | `::get_schema()` | Get the JSON schema for the response |
 
 Constants: `RestEndpoint::NAMESPACE`, `RestEndpoint::ROUTE`
+
+**Filter:** `wpb_mcp_servers_list_rest_capability` — override the required WordPress capability at runtime.
+
+```php
+// Default behaviour (administrators only):
+// apply_filters( 'wpb_mcp_servers_list_rest_capability', 'manage_options' )
+```
 
 ### `ServerData`
 

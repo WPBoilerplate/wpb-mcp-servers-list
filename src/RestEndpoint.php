@@ -15,6 +15,10 @@ use WPBoilerplate\McpServersList\Data\ServerData;
  * Registers a read-only REST API endpoint that returns all collected MCP
  * server data as JSON.
  *
+ * Access is restricted to WordPress administrators (`manage_options`) by
+ * default. The required capability can be overridden at runtime via the
+ * `wpb_mcp_servers_list_rest_capability` filter.
+ *
  * This class does not self-register — the consuming plugin decides when and
  * whether to call RestEndpoint::register().
  *
@@ -26,7 +30,13 @@ use WPBoilerplate\McpServersList\Data\ServerData;
  *       \WPBoilerplate\McpServersList\RestEndpoint::register();
  *   }, 20 );
  *
- * Custom namespace / capability:
+ * Override the required capability via filter:
+ *
+ *   add_filter( 'wpb_mcp_servers_list_rest_capability', function ( $cap ) {
+ *       return 'edit_posts'; // allow editors
+ *   } );
+ *
+ * Custom namespace / capability at registration time:
  *
  *   RestEndpoint::register( 'manage_options', 'my-plugin/v1', '/mcp-servers' );
  */
@@ -89,7 +99,26 @@ class RestEndpoint {
 					);
 				},
 				'permission_callback' => static function () use ( $capability ) {
-					return current_user_can( $capability );
+					/**
+					 * Filters the WordPress capability required to access the MCP servers
+					 * list REST endpoint.
+					 *
+					 * Defaults to 'manage_options' (administrators only). Return a different
+					 * capability string to broaden or restrict access.
+					 *
+					 * Example — allow editors:
+					 *   add_filter( 'wpb_mcp_servers_list_rest_capability', fn() => 'edit_posts' );
+					 *
+					 * Example — allow any logged-in user:
+					 *   add_filter( 'wpb_mcp_servers_list_rest_capability', fn() => 'read' );
+					 *
+					 * @since 1.0.1
+					 *
+					 * @param string $capability The required capability. Default 'manage_options'.
+					 */
+					$required = (string) apply_filters( 'wpb_mcp_servers_list_rest_capability', $capability );
+
+					return current_user_can( $required );
 				},
 				'schema'              => array( self::class, 'get_schema' ),
 			)

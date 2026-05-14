@@ -15,3 +15,10 @@ Chronological record of decisions, changes, and notes during development of `wpb
 - Added `RestEndpoint` as fully opt-in: no routes are registered unless the consuming plugin explicitly calls `RestEndpoint::register()`.
 - PSR-4 autoloading configured under `WPBoilerplate\McpServersList\`.
 - Initialised git repository with remote `git@github.com:WPBoilerplate/wpb-mcp-servers-list.git`.
+
+## 2026-05-14 (patch)
+
+### Permission filter
+
+- Added `wpb_mcp_servers_list_rest_capability` filter to `RestEndpoint` permission callback so consuming plugins can change the required capability at runtime without re-registering the endpoint.
+- Default remains `manage_options`; the filter is evaluated on every request, ensuring the restriction is always enforced server-side.

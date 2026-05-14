@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2026-05-14
+## [1.0.1] - 2026-05-14
+
+### Changed
+- REST endpoint permission is now evaluated via the `wpb_mcp_servers_list_rest_capability` filter on every request, allowing consuming plugins to change the required capability without re-registering the endpoint.
+- Default capability remains `manage_options` (administrators only).
+
+### Fixed
+- Non-admin users now always receive `401 Unauthorized` regardless of the `$capability` argument passed to `RestEndpoint::register()` unless the filter explicitly grants a lower capability.
+
+---
+
+
 
 ### Added
 - `McpServersList` singleton — collects all MCP servers registered by the MCP Adapter plugin.
