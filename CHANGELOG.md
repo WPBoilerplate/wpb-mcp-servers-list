@@ -7,26 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.2] - 2026-05-14
-
-### Added
-- `automattic/jetpack-autoloader` `^5.0` as a Composer dependency.  
-  Consumers must load `vendor/autoload_packages.php` (not `vendor/autoload.php`) to benefit from conflict-free class loading when multiple plugins share this package.
-
----
-
-
-
-### Changed
-- REST endpoint permission is now evaluated via the `wpb_mcp_servers_list_rest_capability` filter on every request, allowing consuming plugins to change the required capability without re-registering the endpoint.
-- Default capability remains `manage_options` (administrators only).
-
-### Fixed
-- Non-admin users now always receive `401 Unauthorized` regardless of the `$capability` argument passed to `RestEndpoint::register()` unless the filter explicitly grants a lower capability.
-
----
-
-
+## [0.0.1] - 2026-05-25
 
 ### Added
 - `McpServersList` singleton — collects all MCP servers registered by the MCP Adapter plugin.
@@ -39,3 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All data objects implement `JsonSerializable` for direct use with `wp_send_json` / `WP_REST_Response`.
 - PSR-4 autoloading under `WPBoilerplate\McpServersList\`.
 - Soft dependency on MCP Adapter — the package degrades gracefully when the adapter is not active.
+- `automattic/jetpack-autoloader` `^5.0` as a Composer dependency.  
+  Consumers must load `vendor/autoload_packages.php` (not `vendor/autoload.php`) to benefit from conflict-free class loading when multiple plugins share this package.
+
+### Changed
+- REST endpoint permission is now evaluated via the `wpb_mcp_servers_list_rest_capability` filter on every request, allowing consuming plugins to change the required capability without re-registering the endpoint.
+- Default capability remains `manage_options` (administrators only).
+- Upgraded `automattic/jetpack-autoloader` to `v5.0.18` (latest stable).
+
+### Fixed
+- Non-admin users now always receive `401 Unauthorized` regardless of the `$capability` argument passed to `RestEndpoint::register()` unless the filter explicitly grants a lower capability.

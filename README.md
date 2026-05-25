@@ -12,7 +12,7 @@
 |---|---|
 | PHP | >= 7.4 |
 | WordPress | >= 6.8 |
-| [Jetpack Autoloader](https://github.com/Automattic/jetpack-autoloader) | ^5.0 (Composer dependency) |
+| [Jetpack Autoloader](https://github.com/Automattic/jetpack-autoloader) | ^5.0 (≥ v5.0.18, Composer dependency) |
 | [MCP Adapter plugin](https://github.com/WordPress/mcp-adapter) | >= 0.5.0 (soft dependency) |
 
 The package works gracefully when MCP Adapter is not active — `get_servers()` simply returns an empty array and `is_adapter_available()` returns `false`.
